@@ -62,6 +62,14 @@
   \renewcommand{\footrulewidth}{0.0pt}
 }
 
+% SWOT 
+\usepackage{xcolor}
+\definecolor{swotS}{RGB}{226,237,143}
+\definecolor{swotW}{RGB}{247,193,139}
+\definecolor{swotO}{RGB}{173,208,187}
+\definecolor{swotT}{RGB}{192,165,184}
+\usepackage[raster]{tcolorbox}
+
 
 
 % --------------------------- CHAPTER HEADERS ---------------------
@@ -297,142 +305,158 @@ WARNING!  In a diploma thesis which is a team project: Description of the work d
 
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
-
-
-\chapter{The next chapter}
-
-Lorem ipsum dolor sit amet, consetetur sadipscing elit, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
-
-\section{Matrices}
-
-Simple matrix:
-\begin{equation*}
-	\begin{matrix}
-	a & b & c & d \\
-	d & e & f & g \\
-	1 & 1 & 1 & 1
-	\end{matrix}
-\end{equation*}
-%
-Matrix with parentheses:
-%
-\begin{equation*}
-	A = 
-	\begin{pmatrix}
-	a & b & c & d \\
-	d & e & f & g \\
-	1 & 1 & 1 & 1
-	\end{pmatrix}
-\end{equation*}
-%
-Matrix with brackets:
-%
-\begin{equation*}
-	\begin{bmatrix}
-	a & b & c & d \\
-	d & e & f & g \\
-	1 & 1 & 1 & 1
-	\end{bmatrix}
-\end{equation*}
-%
-You can also use more general environment:
-%
-\begin{equation*}
-	\renewcommand{\arraystretch}{0.8}
-	\begin{array}{ccc}
-	1 & 0 & 0 \\
-	0 & 1 & 0 \\
-	0 & 0 & 1 \\
-	\end{array}
-\end{equation*}
-%
-Matrix with braces:
-%
-\begin{equation*}
-	\left\{
-	\renewcommand{\arraystretch}{0.8}
-	\begin{array}{ccc}
-	1 & 0 & 0 \\
-	0 & 1 & 0 \\
-	0 & 0 & 1 \\
-	\end{array}\right\}
-\end{equation*}
-
-\begin{definition}
-	%
-	Let $A\neq \emptyset$, $n \in \mathbb{N}$. Every function $f\colon A^n \to A$ is called an \emph{$n$-ary operation} or \emph{działaniem} określonym na $A$.
-	$0$-ary operations are constant functions.
-	%
-\end{definition}
-
-
-\begin{definition}[Algebra]
-	%
-	The ordered pair $(A,F)$, where $A\neq \emptyset$ is a set and $F$ is a family of operations defined on $A$, shall be called an \emph{algebra} (or \emph{$F$-algebra}). The set $A$ is called \emph{the set of elements}, \emph{support} or \emph{universe} of an algebra $(A,F)$ and $F$ is called \emph{the set of elementary operations}.
-	%
-\end{definition}
-
-\begin{proposition}
-	%
-	I state that, having passed to the limit, the only thing left me me is to camp at said limit or return, or, maybe, search for a pass or an exit to other areas.
-	%
-\end{proposition}
-
-
-
-
-
-% ------------------------------- BIBLIOGRAPHY ---------------------------
-% LEXICOGRAPHICAL ORDER BY AUTHORS' LAST NAMES
-% FOR AMBITIOUS ONES - USE BIBTEX
-
-
-\begin{thebibliography}{20} % IF YOU HAVE MORE REFERENCES, WRITE THE BIGGER NUMBER
-
-\bibitem[1]{Ktos} A. Author, \emph{Title of a book}, Publisher, year, page--page.
-\bibitem[2]{Innyktos} J. Bobkowski, S. Dobkowski, Title of an article, \emph{Magazine X, No. 7}, year, PAGE--PAGE.
-\bibitem[3]{B} C. Brink, Power structures, \emph{Algebra Universalis 30(2)}, 1993, 177--216.
-\bibitem[4]{H} F. Burris, H. P. Sankappanavar, \emph{A Course of Universal Algebra}, Springer-Verlag, New York, 1981.
-\end{thebibliography}
-\pagenumbering{gobble}
-\thispagestyle{empty}
-
-
-
-% ----------------------- LIST OF SYMBOLS AND ABBREVIATIONS ------------------
-\chapter*{List of symbols and abbreviations}
-
-\begin{tabular}{cl}
-nzw. & nadzwyczajny \\
-* & star operator \\
-$\widetilde{}$ & tilde 
+\chapter*{Responsibilities and Schedule}
+\markboth{}{Responsibilities and Schedule}
+\addcontentsline{toc}{chapter}{Responsibilities and Schedule}
+\begin{center}
+\begin{tabular}{ |c|c| } 
+ \hline
+ Full Name & Responsibility \\ 
+ \hline
+ Kiryl Volkau & Frontend (Elm) \& DevOps (Azure) \\ 
+ Illia Manzhella & Backend (Rust) \& DevOps (GitHub Actions) \\ 
+ \hline
 \end{tabular}
-\\
-If you don't need it, delete it.
-\thispagestyle{empty}
+\begin{figure}[h]
+    \includegraphics[scale=.52]{img/gantt.png}
+    \caption{Gantt chart by task and person}
+\end{figure}
+\end{center}
 
+\chapter*{Functional Requirements}
+\markboth{}{Functional Requirements}
+\addcontentsline{toc}{chapter}{Functional Requirements}
 
-% ----------------------------  LIST OF FIGURES --------------------------------
-\listoffigures
-\thispagestyle{empty}
-If you don't need it, delete it.
+We have decided to describe functionality of an application from the users' roles perspective, 
+allowing us to represent fuctional requirements as a user stories.
+Moreover, it allows us to specify granularity of given access and permissions.
 
+The roles are as follows:
+\begin{itemize}
+\itemsep0em 
+\addtolength{\itemindent}{0.5cm}
+	\vspace{-0.2cm}\item Everyone (combines all the groups below)
+    \vspace{-0.2cm}\item Anonymous User (Unauthorised)
+	\vspace{-0.2cm}\item Everyone Authorised (Teacher, User, Administrator)
+    \vspace{-0.2cm}\item Teacher
+    \vspace{-0.2cm}\item Student
+    \vspace{-0.2cm}\item Administrator
+\end{itemize}
 
-% -----------------------------  LIST OF TABLES --------------------------------
-\renewcommand{\listtablename}{Spis tabel}
-\listoftables
-\thispagestyle{empty}
-If you don't need it, delete it.
-
-% -----------------------------  LIST OF APPENDICES ---------------------------
-\chapter*{List of appendices}
 \begin{enumerate}
-\item Appendix 1
-\item Appendix 2
-\item In case of no appendices, delete this part.
+	\itemsep0em 
+    \item \textbf{Everyone} can: 
+    \begin{itemize}
+        \vspace{-0.2cm}\item View universities that has been made public
+        \vspace{-0.2cm}\item View university courses (and its contents) that has been made public
+        \vspace{-0.2cm}\item Search for courses by name, university, tags
+    \end{itemize}
+    
+    
+    \item \textbf{Everyone Authorised} can: 
+    \begin{itemize}
+        \item Log out
+        \item Change personal details
+        \item See their University details (if they are hidden from anonymous users)
+    \end{itemize}
+    
+    \item \textbf{Anonymous User} can :
+    \begin{itemize}
+        \item Create account as student
+        \item Create account as teacher
+        \item Login to the existing account
+    \end{itemize}
+    
+    \item \textbf{Authenticated User} can :
+     \begin{itemize}
+        \item See their events calendar
+        \item Leave messages on university / courses boards
+    \end{itemize}
+
+    \item \textbf{Teacher} can :
+     \begin{itemize}
+        \item Submit own courses
+        \item Change own course information
+        \item Delete own course
+        \item See students' comments on his/her course
+        \item Add additional materials to the course
+    \end{itemize}
+    
+    \item \textbf{University Administrator} can :
+    \begin{itemize}
+        \item Manage university staff and students
+        \item Review submitted university courses
+        \item Accept university submitted courses
+        \item Reject university submitted courses
+        \item Delete university courses (with possibility to recover)
+        \item See university students' and teachers' details
+        \item Make university courses open
+    \end{itemize}
+
 \end{enumerate}
-\thispagestyle{empty}
+
+There is also a super-admin role foreseen, which should be used for the 
+
+\chapter*{Non-Functional Requirements}
+\markboth{}{Non-Functional Requirements}
+\addcontentsline{toc}{chapter}{Non-Functional Requirements}
+
+\begin{enumerate}
+\itemsep 0em 
+    \item \textbf{Usability} \\
+     Level of basic user expertise assumed. User interface standards will be used.
+    \item \textbf{Reliability} \\
+      Platform will be available 24/7 with the possibility of restarting the system in case of emergency situations (using PaaS / IaaS functionality or kubernetes). Recoverability will be maintained by an engineer who will recover system from a shut-down failure in case of several unsuccessful attempts to restart). It will accessible from the most popular browsers like Google Chrome (and Chromium-based), Safari, Firefox, and Opera.
+
+    \item \textbf{Performance} \\
+     System response time is supposed to not exceed 2000ms, automatic recovery and start-up time is expected to take up to 30 minutes. 
+     
+    \item \textbf{Supportability} \\
+     System should be testable, maintainable and easily scalable for the needs of higher throughput of media streaming for large number of students. This includes possibility of refactoring the architecture to be more decoupled. 
+     
+     \item \textbf{Extendibility} \\ 
+     System should be easy to extend - meaning it should be possible to add more features to the existing architecture without significant need for the refactoring of previously implemented system. 
+     
+\end{enumerate}
+
+\chapter*{SWOT Analysis}
+\markboth{}{SWOT Analysis}
+\addcontentsline{toc}{chapter}{SWOT Analysis}
+\begin{tcbraster}[raster columns=2, boxrule=0mm, arc=0mm]
+\begin{tcolorbox}[equal height group=A, size=fbox, colback=swotS!60, colframe=swotS!80!black, title=\textsc{strengths}]
+\begin{enumerate}
+\item Good understanding of the chosen technologies
+\item Team of skilled well-coordinated developers 
+\item Milestones are well-defined and understood
+\end{enumerate}
+\end{tcolorbox}
+\begin{tcolorbox}[equal height group=A, size=fbox, colback=swotW!60, colframe=swotW!80!black, title=\textsc{weaknesses}]
+\begin{enumerate}
+\item Lack of experience with large projects
+\item Budget of the project
+\item Lack of marketing experience
+\end{enumerate}
+\end{tcolorbox}
+\begin{tcolorbox}[equal height group=B, size=fbox, colback=swotO!60, colframe=swotO!80!black, title=\textsc{opportunities}]
+\begin{enumerate}
+\item Growing interest in educational products gives more confidence in the success of the product
+\item Modernization of the market of educational websites  
+\end{enumerate}
+\end{tcolorbox}
+\begin{tcolorbox}[equal height group=B, size=fbox, colback=swotT!60, colframe=swotT!80!black, title=\textsc{threats}]
+\begin{enumerate}
+\item Big competition on the market
+\item Not enough time to complete the project
+\item Absence of team members due to some reasons
+\end{enumerate}
+\end{tcolorbox}
+\end{tcbraster}
+\textbf{Threats}
+\begin{enumerate}
+    \item \textit{Big competition on the market} - as was mentioned in the Introduction, there are already several global players, being Udemy, Udacity, Coursera, etc. Moreover, there are local solutions - like \href{https://navoica.pl}{https://navoica.pl} for Poland offering similar functionality, having well-established processes and budget. Combined with listed above weaknesses - as lack of marketing experience - we may find ourselves in position, when the product is ready, but no one learned about it.
+     \item \textit{Not enough time to complete the project} - there is a possibility that such a big project our team will not be able to finish on time. In such scenario, out team is planning to extend the time span for this project for one more semester.
+      \item \textit{Absence of team members due to some reasons} - in case of absence of any of the team members for some reason, all the responsibilities of that person will be taken by the other members of the team.
+\end{enumerate}
 
 
 \end{document}
