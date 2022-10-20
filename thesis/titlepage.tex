@@ -1,0 +1,94 @@
+% !TEX program = xelatex
+
+\documentclass[12pt,twoside,a4paper]{article}
+% compile this with XeLaTeX. Then, view PDF.
+
+\usepackage{fontspec,newunicodechar}
+\defaultfontfeatures{Ligatures=TeX}
+
+\usepackage{graphicx}
+\usepackage[vmargin = 25mm, hmargin = 20mm, bindingoffset=10mm]{geometry}
+
+\newfontfamily\arial{arial.ttf}
+
+\linespread{1.5}
+\setlength{\parindent}{0mm}
+
+% ------------------------------------------------------
+
+\newcommand{\discipline}{Computer Science and Information Systems}
+\renewcommand{\title}{Platform for hybrid learning }
+\newcommand{\supervisor}{Dr Eng., Janusz Oleniacz}
+\renewcommand{\year}{2022}
+
+\newcommand{\authori}{Kiryl Volkau}
+\newcommand{\albumi}{30076}
+\newcommand{\authorii}{Illia Manzhela}
+\newcommand{\albumii}{302514}
+
+
+\begin{document}
+
+\pagestyle{empty}
+
+
+\begin{center}
+\includegraphics[scale=1.]{img/wut}
+\vspace{40pt}
+
+
+\includegraphics[scale=1.]{img/bachelor} % or master
+
+{ \arial
+in the field of study~\discipline 
+
+\vspace{30pt}
+{\arial \large \title}
+
+
+\vspace{40pt}
+
+{\arial \huge \authori }
+
+\vspace{5pt}
+
+student record book number \albumi
+
+\vspace {20pt}
+{\arial \huge \authorii}
+
+\vspace{5pt}
+
+student record book number \albumii
+
+\vspace{40pt}
+
+thesis supervisor \\
+{\arial \supervisor}
+
+\vspace{15pt}
+ 
+consultation  \\
+{\arial Professor Władysław Homenda}
+
+\vfill
+ 
+WARSAW \year \\
+}
+\end{center}
+
+
+%\newpage
+%\null
+%
+%\vfill
+%
+%\begin{center}
+%\begin{tabular}[t]{ccc}
+%............................................. & \hspace*{100pt} & .............................................\\
+%supervisor's signature & \hspace*{100pt} & author's signature
+%\end{tabular}
+%\end{center}
+
+
+\end{document}

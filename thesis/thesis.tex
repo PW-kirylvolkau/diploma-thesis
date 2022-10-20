@@ -1,0 +1,438 @@
+% !TEX program = pdflatex
+
+\documentclass[a4paper,11pt,twoside]{report}
+% THIS FILE SHOULD BE COMPILED BY pdfLaTeX
+
+% ----------------------   PREAMBLE PART ------------------------------
+
+% ------------------------ ENCODING & LANGUAGES ----------------------
+
+\usepackage[utf8]{inputenc}
+%\usepackage[MeX]{polski} % Not needed unless You have a name with polish symbols or sth
+\usepackage[T1]{fontenc}
+\usepackage[english, polish]{babel}
+
+
+\usepackage{amsmath, amsfonts, amsthm, latexsym} % MOSTLY MATHEMATICAL SYMBOLS
+
+\usepackage[final]{pdfpages} % INPUTING TITLE PDF PAGE - GENERATE IT FIRST!
+%\usepackage[backend=bibtex, style=verbose-trad2]{biblatex}
+
+
+\usepackage{commath} % various commands which can make writing math expressions easier --- documentation available at: https://ctan.gust.org.pl/tex-archive/macros/latex/contrib/commath/commath.pdf
+
+\usepackage[hidelinks]{hyperref} % for hyperlinks, for example, urls, references to equations, entries in a bibliography --- hidelinks option removes rectangles around hiperlinks
+
+
+% ---------------- MARGINS, INDENTATION, LINESPREAD ------------------
+
+\usepackage[inner=20mm, outer=20mm, bindingoffset=10mm, top=25mm, bottom=25mm]{geometry} % MARGINS
+
+
+\linespread{1.5}
+\allowdisplaybreaks         % ALLOWS BREAKING PAGE IN MATH MODE
+
+\usepackage{indentfirst}    % IT MAKES THE FIRST PARAGRAPH INDENTED; NOT NEEDED
+\setlength{\parindent}{5mm} % WIDTH OF AN INDENTATION
+
+
+%---------------- RUNNING HEAD - CHAPTER NAMES, PAGE NUMBERS ETC. -------------------
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+% PAGINATION: LEFT ALIGNMENT ON EVEN PAGES, RIGHT ALIGNMENT ON ODD PAGES 
+\fancyfoot[LE,RO]{\thepage} 
+% RIGHT HEADER: zawartość \rightmark do lewego, wewnętrznego (marginesu) 
+\fancyhead[LO]{\sc \nouppercase{\rightmark}}
+% lewa pagina: zawartość \leftmark do prawego, wewnętrznego (marginesu) 
+\fancyhead[RE]{\sc \leftmark}
+
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+
+% HEAD RULE - IT'S A LINE WHICH SEPARATES HEADER AND FOOTER FROM CONTENT
+\renewcommand{\headrulewidth}{0 pt} % 0 MEANS NO RULE, 0.5 MEANS FINE RULE, THE BIGGER VALUE THE THICKER RULE
+
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyfoot[LE,RO]{\thepage}
+  
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0.0pt}
+}
+
+
+
+% --------------------------- CHAPTER HEADERS ---------------------
+
+\usepackage{titlesec}
+\titleformat{\chapter}
+  {\normalfont\Large \bfseries}
+  {\thechapter.}{1ex}{\Large}
+
+\titleformat{\section}
+  {\normalfont\large\bfseries}
+  {\thesection.}{1ex}{}
+\titlespacing{\section}{0pt}{30pt}{20pt} 
+
+    
+\titleformat{\subsection}
+  {\normalfont \bfseries}
+  {\thesubsection.}{1ex}{}
+
+
+% ----------------------- TABLE OF CONTENTS SETUP ---------------------------
+
+\def\cleardoublepage{\clearpage\if@twoside
+\ifodd\c@page\else\hbox{}\thispagestyle{empty}\newpage
+\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+
+
+% THIS MAKES DOTS IN TOC FOR CHAPTERS
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\l@chapter}
+  {\hfil}
+  {\leaders\hbox{\normalfont$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}\hfill}
+  {}{}
+\makeatother
+
+\usepackage{titletoc}
+\makeatletter
+\titlecontents{chapter}% <section-type>
+  [0pt]% <left>
+  {}% <above-code>
+  {\bfseries \thecontentslabel.\quad}% <numbered-entry-format>
+  {\bfseries}% <numberless-entry-format>
+  {\bfseries\leaders\hbox{\normalfont$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}\hfill\contentspage}% <filler-page-format>
+
+\titlecontents{section}
+  [1em]
+  {}
+  {\thecontentslabel.\quad}
+  {}
+  {\leaders\hbox{\normalfont$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}\hfill\contentspage}
+
+\titlecontents{subsection}
+  [2em]
+  {}
+  {\thecontentslabel.\quad}
+  {}
+  {\leaders\hbox{\normalfont$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}\hfill\contentspage}
+\makeatother
+
+
+
+% ---------------------- TABLES AD FIGURES NUMBERING ----------------------
+
+\renewcommand*{\thetable}{\arabic{chapter}.\arabic{table}}
+\renewcommand*{\thefigure}{\arabic{chapter}.\arabic{figure}}
+
+
+% ------------- DEFINING ENVIRONMENTS FOR THEOREMS, DEFINITIONS ETC. ---------------
+
+\makeatletter
+\newtheoremstyle{definition}
+{3ex}%                           % Space above
+{3ex}%                           % Space below
+{\upshape}%                      % Body font
+{}%                              % Indent amount
+{\bfseries}%                     % Theorem head font
+{.}%                             % Punctuation after theorem head
+{.5em}%                          % Space after theorem head, ' ', or \newline
+{\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
+\makeatother
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+% --------------------- END OF PREAMBLE PART (MOSTLY) --------------------------
+
+
+
+
+
+% -------------------------- USER SETTINGS ---------------------------
+
+\renewcommand{\title}{Platform for hybrid learning}
+\newcommand{\type}{Engineer} % Master OR Engineer
+\newcommand{\supervisor}{DEng Janusz Oleniacz} % TITLE AND NAME OF THE SUPERVISOR
+
+
+
+\begin{document}
+\sloppy
+\selectlanguage{english}
+
+\includepdf[pages=-]{titlepage} % THIS INPUTS THE TITLE PAGE
+
+\null\thispagestyle{empty}\newpage
+
+% ------------------ PAGE WITH SIGNATURES --------------------------------
+
+%\thispagestyle{empty}\newpage
+%\null
+%
+%\vfill
+%
+%\begin{center}
+%\begin{tabular}[t]{ccc}
+%............................................. & \hspace*{100pt} & .............................................\\
+%supervisor's signature & \hspace*{100pt} & author's signature
+%\end{tabular}
+%\end{center}
+%
+
+
+% ---------------------------- ABSTRACTS -----------------------------
+
+{  \fontsize{12}{14} \selectfont
+\begin{abstract} 
+	\begin{center}
+		\title  
+	\end{center}
+The platform for hybrid learning intends to demonstrate, how the design of educational software could be done using a non-object-oriented approach alongside applying principles of cloud computing.
+As students, during the pandemic of 2020-2021, we have seen how the educational system was struggling to handle such a change. Meanwhile, we have also discovered the advantages of studying online - it gave us a great level of flexibility and the possibility to re-access materials (in particular). Keeping in mind, that teachers would also benefit from the re-design of the current approach to knowledge transfer, we decided to try and implement a platform, that covers the interests of both groups. 
+We did that using Rust programming language for our backend system, Elm programming language for the frontend, and Azure as a main hosting solution. This paper addresses the obstacles to implementing such a platform and how it differs from already existing solutions. We used our professional knowledge as acting software engineers and students to identify and solve arising issues. 
+It is worth adding, that we do not focus on the software development pipeline here, as it would differ vastly from the real-world development team. Nevertheless, we address usability, extendability, supportability, and other important software traits, since they are crucial to the success of the design itself. \\
+
+\noindent \textbf{Keywords:} hydrid learning, massive open online courses, functional programming, cloud computing, education
+\end{abstract}
+}
+
+\null\thispagestyle{empty}\newpage
+
+
+% {\selectlanguage{polish} \fontsize{12}{14}\selectfont
+% \begin{abstract}
+
+% \begin{center}
+% \tytul
+% \end{center}
+
+% Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+% Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.\\
+
+% \noindent \textbf{Słowa kluczowe:} slowo1, slowo2, ...
+% \end{abstract}
+% }
+
+
+%% --------------------------- DECLARATIONS ------------------------------------
+%
+%%
+%%	IT IS NECESSARY OT ATTACH FILLED-OUT AUTORSHIP DEECLRATION. SCAN (IN PDF FORMAT) NEEDS TO BE PLACED IN scans FOLDER AND IT SHOULD BE CALLED, FOR EXAMPLE, DECLARATION_OF_AUTORSHIP.PDF. IF THE FILENAME OR FILEPATH IS DIFFERENT, THE FILEPATH IN THE NEXT COMMAND HAS TO BE ADJUSTED ACCORDINGLY.
+%%
+%%	command attacging the declarations of autorship
+%%
+%\includepdf[pages=-]{scans/declaration-of-autorship}
+%\null\thispagestyle{empty}\newpage
+%
+%% optional declaration
+%%
+%%	command attaching the declaataration on granting a license
+%%
+%\includepdf[pages=-]{scans/declaration-on-granting-a-license}
+%%
+%%	.tex corresponding to the above PDF files are present in the 3. declarations folder 
+%
+\chapter*{History of changes}
+\begin{tabular}{ |p{3cm}|p{3cm}|p{7cm}|  }
+ 	\hline
+ 	\multicolumn{3}{|c|}{Table of changes} \\
+ 	\hline
+ 	Author & Date & Change\\
+ 	\hline
+ 	Kiryl Volkau   & 20.10.2021    & add: Abstract, Introduction \\
+	Kiryl Volkau   & 20.10.2021    & add: Functional requirements \\
+ 	Illia Manzhela &  20.10.2021  & add: Non-functional requirements \\
+ 	Illia Manzhela &  20.10.2021  & add: SWOT analysis, schedule \\
+ 	\hline
+\end{tabular}
+% ------------------- TABLE OF CONTENTS ---------------------
+% \selectlanguage{english} - for English
+\pagenumbering{gobble}
+\tableofcontents
+\thispagestyle{empty}
+\newpage % IF YOU HAVE EVEN QUANTITY OD PAGES OF TOC, THEN REMOVE IT OR ADD \null\newpage FOR DOUBLE BLANK PAGE BEFORE INTRODUCTION
+
+
+% -------------------- THE BODY OF THE THESIS --------------------------------
+
+\null\thispagestyle{empty}\newpage
+\pagestyle{fancy}
+\pagenumbering{arabic}
+\setcounter{page}{11}
+
+\chapter*{Vocabulary}
+\markboth{}{Vocabulary}
+\addcontentsline{toc}{chapter}{Vocabulary}
+
+
+\begin{enumerate}
+\item \textbf{Massive Open Online Courses (MOOC)} platform - platform with educational content including videos, text content, discussion forums.
+\item \textbf{Application Programming Interface (API)} - set of definitions for building and integrating application software.
+\item \textbf{Minimal Viable Product (MVP)} - version of product that has enough functionalities to be used by early customers.
+\item \textbf{Infrastracture as a Service (IaaS} - pay-as-you-go service where a third party provides you with infrastructure services, like storage and virtualization, as you need them, via a cloud, through the internet. \href{https://www.redhat.com/en/topics/cloud-computing/iaas-vs-paas-vs-saas}{https://www.redhat.com/en/topics/cloud-computing/iaas-vs-paas-vs-saas}
+\item \textbf{Platform as a Service (PaaS}) - on-premise infrastructure management where a provider hosts the hardware and software on its own infrastructure and delivers this platform to the user as an integrated solution, solution stack, or service through an internet connection. \href{https://www.redhat.com/en/topics/cloud-computing/iaas-vs-paas-vs-saas}{https://www.redhat.com/en/topics/cloud-computing/iaas-vs-paas-vs-saas}
+\end{enumerate}
+
+
+\chapter*{Introduction}
+\markboth{}{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
+
+What is the thesis about? What is the content of it? What is the Author's contribution to it?
+\par
+WARNING!  In a diploma thesis which is a team project: Description of the work division in the team, including the scope of each co-author’s contribution to the practical part (Team Programming Project) and the descriptive part of the diploma thesis. 
+\par
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+
+
+\chapter{The next chapter}
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elit, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+
+\section{Matrices}
+
+Simple matrix:
+\begin{equation*}
+	\begin{matrix}
+	a & b & c & d \\
+	d & e & f & g \\
+	1 & 1 & 1 & 1
+	\end{matrix}
+\end{equation*}
+%
+Matrix with parentheses:
+%
+\begin{equation*}
+	A = 
+	\begin{pmatrix}
+	a & b & c & d \\
+	d & e & f & g \\
+	1 & 1 & 1 & 1
+	\end{pmatrix}
+\end{equation*}
+%
+Matrix with brackets:
+%
+\begin{equation*}
+	\begin{bmatrix}
+	a & b & c & d \\
+	d & e & f & g \\
+	1 & 1 & 1 & 1
+	\end{bmatrix}
+\end{equation*}
+%
+You can also use more general environment:
+%
+\begin{equation*}
+	\renewcommand{\arraystretch}{0.8}
+	\begin{array}{ccc}
+	1 & 0 & 0 \\
+	0 & 1 & 0 \\
+	0 & 0 & 1 \\
+	\end{array}
+\end{equation*}
+%
+Matrix with braces:
+%
+\begin{equation*}
+	\left\{
+	\renewcommand{\arraystretch}{0.8}
+	\begin{array}{ccc}
+	1 & 0 & 0 \\
+	0 & 1 & 0 \\
+	0 & 0 & 1 \\
+	\end{array}\right\}
+\end{equation*}
+
+\begin{definition}
+	%
+	Let $A\neq \emptyset$, $n \in \mathbb{N}$. Every function $f\colon A^n \to A$ is called an \emph{$n$-ary operation} or \emph{działaniem} określonym na $A$.
+	$0$-ary operations are constant functions.
+	%
+\end{definition}
+
+
+\begin{definition}[Algebra]
+	%
+	The ordered pair $(A,F)$, where $A\neq \emptyset$ is a set and $F$ is a family of operations defined on $A$, shall be called an \emph{algebra} (or \emph{$F$-algebra}). The set $A$ is called \emph{the set of elements}, \emph{support} or \emph{universe} of an algebra $(A,F)$ and $F$ is called \emph{the set of elementary operations}.
+	%
+\end{definition}
+
+\begin{proposition}
+	%
+	I state that, having passed to the limit, the only thing left me me is to camp at said limit or return, or, maybe, search for a pass or an exit to other areas.
+	%
+\end{proposition}
+
+
+
+
+
+% ------------------------------- BIBLIOGRAPHY ---------------------------
+% LEXICOGRAPHICAL ORDER BY AUTHORS' LAST NAMES
+% FOR AMBITIOUS ONES - USE BIBTEX
+
+
+\begin{thebibliography}{20} % IF YOU HAVE MORE REFERENCES, WRITE THE BIGGER NUMBER
+
+\bibitem[1]{Ktos} A. Author, \emph{Title of a book}, Publisher, year, page--page.
+\bibitem[2]{Innyktos} J. Bobkowski, S. Dobkowski, Title of an article, \emph{Magazine X, No. 7}, year, PAGE--PAGE.
+\bibitem[3]{B} C. Brink, Power structures, \emph{Algebra Universalis 30(2)}, 1993, 177--216.
+\bibitem[4]{H} F. Burris, H. P. Sankappanavar, \emph{A Course of Universal Algebra}, Springer-Verlag, New York, 1981.
+\end{thebibliography}
+\pagenumbering{gobble}
+\thispagestyle{empty}
+
+
+
+% ----------------------- LIST OF SYMBOLS AND ABBREVIATIONS ------------------
+\chapter*{List of symbols and abbreviations}
+
+\begin{tabular}{cl}
+nzw. & nadzwyczajny \\
+* & star operator \\
+$\widetilde{}$ & tilde 
+\end{tabular}
+\\
+If you don't need it, delete it.
+\thispagestyle{empty}
+
+
+% ----------------------------  LIST OF FIGURES --------------------------------
+\listoffigures
+\thispagestyle{empty}
+If you don't need it, delete it.
+
+
+% -----------------------------  LIST OF TABLES --------------------------------
+\renewcommand{\listtablename}{Spis tabel}
+\listoftables
+\thispagestyle{empty}
+If you don't need it, delete it.
+
+% -----------------------------  LIST OF APPENDICES ---------------------------
+\chapter*{List of appendices}
+\begin{enumerate}
+\item Appendix 1
+\item Appendix 2
+\item In case of no appendices, delete this part.
+\end{enumerate}
+\thispagestyle{empty}
+
+
+\end{document}
