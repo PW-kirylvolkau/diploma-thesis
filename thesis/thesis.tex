@@ -217,7 +217,7 @@
 	\end{center}
 The platform for hybrid learning intends to demonstrate, how the design of educational software could be done using a non-object-oriented approach alongside applying principles of cloud computing.
 As students, during the pandemic of 2020-2021, we have seen how the educational system was struggling to handle such a change. Meanwhile, we have also discovered the advantages of studying online - it gave us a great level of flexibility and the possibility to re-access materials (in particular). Keeping in mind, that teachers would also benefit from the re-design of the current approach to knowledge transfer, we decided to try and implement a platform, that covers the interests of both groups. 
-We did that using Rust programming language for our backend system, F\# programming language for the frontend (transpiled to JavaScript), and Azure as a main hosting solution. This paper addresses the obstacles to implementing such a platform and how it differs from already existing solutions. We used our professional knowledge as acting software engineers and students to identify and solve arising issues. 
+We did that using Rust programming language for our backend system, F\# programming language for the frontend (transpiled to JavaScript), and Azure as a main hosting solution. This diploma thesis addresses the obstacles to implementing such a platform and how it differs from already existing solutions. We used our professional knowledge as acting software engineers and students to identify and solve arising issues. 
 It is worth adding, that we do not focus on the software development pipeline here, as it would differ vastly from the real-world development team. Nevertheless, we address usability, extendability, supportability, and other important software traits, since they are crucial to the success of the design itself. \\
 
 \noindent \textbf{Keywords:} hydrid learning, massive open online courses, functional programming, cloud computing, education
@@ -262,18 +262,21 @@ It is worth adding, that we do not focus on the software development pipeline he
 %%	.tex corresponding to the above PDF files are present in the 3. declarations folder 
 %
 \chapter*{History of changes}
-\begin{tabular}{ |p{3cm}|p{3cm}|p{7cm}|  }
+\begin{center}
+  
+
+\begin{tabular}{ |p{2.5cm}|p{2cm}|p{10cm}|  }
  	\hline
  	\multicolumn{3}{|c|}{Table of changes} \\
  	\hline
  	Author & Date & Change\\
  	\hline
- 	Kiryl Volkau   & 20.10.2021    & add: Abstract, Introduction \\
-	Kiryl Volkau   & 20.10.2021    & add: Functional requirements \\
- 	Illia Manzhela &  20.10.2021  & add: Non-functional requirements \\
- 	Illia Manzhela &  20.10.2021  & add: SWOT analysis, schedule \\
+ 	Kiryl Volkau   & 20.10.2021    & add: Abstract, Introduction, Functional requirements \\
+ 	Illia Manzhela &  20.10.2021  & add: SWOT analysis, schedule, Non-functional requirements \\
  	\hline
 \end{tabular}
+
+\end{center}
 % ------------------- TABLE OF CONTENTS ---------------------
 % \selectlanguage{english} - for English
 \pagenumbering{gobble}
@@ -445,7 +448,7 @@ There is also a super-admin role foreseen, which should be used for resolving so
 \begin{tcolorbox}[equal height group=A, size=fbox, colback=swotW!60, colframe=swotW!80!black, title=\textsc{weaknesses}]
 \begin{enumerate} \itemsep0em 
 \item Lack of experience with functional paradigm for big projects
-\item Lack of expertise in the educatinal domain
+\item Lack of expertise in the educational domain
 \item Lack of experience in the selected technologies
 \end{enumerate}
 \end{tcolorbox}
