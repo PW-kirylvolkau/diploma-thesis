@@ -1,28 +1,44 @@
-use axum::{routing::get, Router};
-use sqlx::{PgConnection, Connection, Executor};
+mod models;
+mod error;
+mod controllers;
 
-#[derive(Debug)]
-struct User {
-    user_id: i32,
-    username: String
-}
+use dotenv::dotenv;
+use axum::{Router, routing::{get, post}, Extension};
+use sqlx::postgres::PgPoolOptions;
+use tower_http::cors::{CorsLayer, Any};
+use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 #[tokio::main]
 async fn main() {
-    let mut conn = PgConnection::connect("postgresql://postgres:my_password@localhost:54320/diploma").await.unwrap();
-    conn.execute(sqlx::query_file!("src/sql/init.sql")).await.unwrap();
-    
-    let user = sqlx::query_as!(User, "select * from test_table")
-        .fetch_one(&mut conn)
+    // ceremony
+    dotenv().ok();
+    let database_url = std::env::var("DATABASE_URL").expect("set DATABASE_URL env variable.");
+    let pool = PgPoolOptions::new()
+        .max_connections(5)
+        .connect(&database_url)
         .await
-        .unwrap();
+        .expect("couldn't connect to the database");
 
-    println!("user name: {}", user.username);
-
-    let app = Router::new().route("/", get(|| async { "Hello, World!" }));
-
-    axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
+    // initialize tracing 
+    tracing_subscriber::registry()
+        .with(tracing_subscriber::EnvFilter::new(
+            std::env::var("RUST_LOG").unwrap_or_else(|_| "backend=debug".into())
+        ))
+        .with(tracing_subscriber::fmt::layer())
+        .init();
+    
+    // initialize app
+    let cors = CorsLayer::new().allow_origin(Any);
+    
+    let app = Router::new()
+        .route("/", get(|| async {"hello world"} ))
+        .route("/register", post(controllers::auth::register))
+        .layer(cors)
+        .layer(Extension(pool));
+    let address = std::net::SocketAddr::from(([127, 0, 0, 1], 3000));
+    tracing::debug!("listening on {}", address);
+    axum::Server::bind(&address)
         .serve(app.into_make_service())
         .await
-        .unwrap();
+        .expect("fail to start server");
 }
