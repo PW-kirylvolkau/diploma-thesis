@@ -1,12 +1,19 @@
 mod models;
 mod error;
 mod controllers;
+mod utils;
 
 use dotenv::dotenv;
 use axum::{Router, routing::{get, post}, Extension};
+use once_cell::sync::Lazy;
 use sqlx::postgres::PgPoolOptions;
 use tower_http::cors::{CorsLayer, Any};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+
+static KEYS: Lazy<models::auth::Keys> = Lazy::new(|| {
+    let secret = std::env::var("JWT_SECRET").unwrap_or_else(|_| "Your secret here".to_owned());
+    models::auth::Keys::new(secret.as_bytes())
+});
 
 #[tokio::main]
 async fn main() {
@@ -33,6 +40,8 @@ async fn main() {
     let app = Router::new()
         .route("/", get(|| async {"hello world"} ))
         .route("/register", post(controllers::auth::register))
+        .route("/login", post(controllers::auth::login))
+        .route("/user_profile", get(controllers::users::user_profile))
         .layer(cors)
         .layer(Extension(pool));
     let address = std::net::SocketAddr::from(([127, 0, 0, 1], 3000));

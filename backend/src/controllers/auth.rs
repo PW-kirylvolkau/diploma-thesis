@@ -1,13 +1,50 @@
 use axum::{Json, Extension};
+use jsonwebtoken::{encode, Header};
 use serde_json::{json, Value};
-use sqlx::PgPool;
+use sqlx::{PgPool};
 
 use crate::{
     error::AppError,
-    models
+    models::{self, auth::Claims}, utils::get_timestamp_8_hours_from_now, KEYS
 };
 
+pub async fn login(
+    Json(credentials): Json<models::auth::User>,
+    Extension(pool): Extension<PgPool>,
+) -> Result<Json<Value>, AppError> {
+    if credentials.email.is_empty() || credentials.password.is_empty() {
+        return Err(AppError::MissingCredential);
+    }
+
+    let user = sqlx::query_as::<_, models::auth::User>(
+        "select email, password from users where email = $1"
+    )
+    .bind(&credentials.email)
+    .fetch_optional(&pool)
+    .await
+    .map_err(|err| {
+        dbg!(err);
+        AppError::InternalServerError
+    })?;
+
+    if let Some(user) = user {
+        if user.password != credentials.password {
+            Err(AppError::WrongCredential)
+        } else {
+            let claims = Claims {
+                email: credentials.email.to_owned(),
+                exp: get_timestamp_8_hours_from_now(),
+            };
+            let token = encode(&Header::default(), &claims, &KEYS.encoding).map_err(|_| AppError::TokenCreation)?;
+            Ok(Json(json!({ "access_token" : token, "type": "Bearer"})))
+        }
+    } else {
+        Err(AppError::UserDoesNotExist)
+    }
+}
+
 pub async fn register(
+    // TODO: read about pattern matching in parameters
     Json(credentials): Json<models::auth::User>,
     Extension(pool): Extension<PgPool>
 ) -> Result<Json<Value>, AppError>
