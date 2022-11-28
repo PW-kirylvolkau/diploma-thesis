@@ -1,13 +1,19 @@
 use axum::{
-    http::StatusCode,
+    async_trait,
+    extract::FromRequestParts,
+    headers::{authorization::Bearer, Authorization},
+    http::{request::Parts, StatusCode},
     response::{IntoResponse, Response},
-    Json,
+    Json, RequestPartsExt, TypedHeader,
 };
-use jsonwebtoken::{DecodingKey, EncodingKey};
+use jsonwebtoken::{decode, DecodingKey, EncodingKey, Validation};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
-#[derive(Deserialize)]
+use super::KEYS;
+
+#[derive(Deserialize, Serialize, sqlx::Type, Debug)]
+#[sqlx(type_name = "role", rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum Role {
     Admin,
     Teacher,
@@ -15,16 +21,38 @@ pub enum Role {
 }
 
 #[derive(Deserialize, sqlx::FromRow)]
-pub struct User {
+pub struct UserCreateDto {
     pub email: String,
     pub password: String,
-    // pub role: Role,
+    pub role: Role,
 }
 
 #[derive(Deserialize, Serialize)]
 pub struct Claims {
     pub email: String,
+    pub role: Role,
     pub exp: u64,
+}
+
+#[async_trait]
+impl<S> FromRequestParts<S> for Claims
+where
+    S: Send + Sync,
+{
+    type Rejection = AuthError;
+
+    async fn from_request_parts(parts: &mut Parts, _state: &S) -> Result<Self, Self::Rejection> {
+        // Extract the token from the authorization header
+        let TypedHeader(Authorization(bearer)) = parts
+            .extract::<TypedHeader<Authorization<Bearer>>>()
+            .await
+            .map_err(|_| AuthError::InvalidToken)?;
+        // Decode the user data
+        let token_data = decode::<Claims>(bearer.token(), &KEYS.decoding, &Validation::default())
+            .map_err(|_| AuthError::InvalidToken)?;
+
+        Ok(token_data.claims)
+    }
 }
 
 pub struct Keys {
@@ -42,7 +70,7 @@ impl Keys {
 }
 
 pub enum AuthError {
-    // InvalidToken,
+    InvalidToken,
     WrongCredential,
     MissingCredential,
     TokenCreation,
@@ -59,7 +87,7 @@ impl IntoResponse for AuthError {
                 StatusCode::INTERNAL_SERVER_ERROR,
                 format!("error occured: {err}"),
             ),
-            // Self::InvalidToken => (StatusCode::BAD_REQUEST, "invalid_token".to_owned()),
+            Self::InvalidToken => (StatusCode::BAD_REQUEST, "invalid_token".to_owned()),
             Self::MissingCredential => (StatusCode::BAD_REQUEST, "missing credential".to_owned()),
             Self::TokenCreation => (
                 StatusCode::INTERNAL_SERVER_ERROR,

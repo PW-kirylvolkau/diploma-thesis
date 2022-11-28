@@ -1,21 +1,27 @@
 use sqlx::PgPool;
 
-use super::models::{AuthError, User};
+use super::models::{AuthError, Role, UserCreateDto};
 
-pub async fn get_user_by_email(email: &str, pool: &PgPool) -> Result<Option<User>, AuthError> {
-    sqlx::query_as::<_, User>("select email, password from users where email = $1")
-        .bind(email)
-        .fetch_optional(pool)
-        .await
-        .map_err(|_| AuthError::InternalServerError("error when retrieving user".to_owned()))
+pub async fn get_user_by_email(email: &str, pool: &PgPool) -> Result<Option<UserCreateDto>, AuthError> {
+    sqlx::query_as!(
+        UserCreateDto,
+        r#"select email, password, role as "role: _" from users where email = $1"#,
+        &email
+    )
+    .fetch_optional(pool)
+    .await
+    .map_err(|_| AuthError::InternalServerError("error when retrieving user".to_owned()))
 }
 
-pub async fn create_user(user: &User, pool: &PgPool) -> Result<(), AuthError> {
-    let result = sqlx::query("insert into users (email, password) values ($1, $2)")
-        .bind(&user.email)
-        .bind(&user.password)
-        .execute(pool)
-        .await;
+pub async fn create_user(user: &UserCreateDto, pool: &PgPool) -> Result<(), AuthError> {
+    let result = sqlx::query!(
+        "insert into users (email, password, role) values ($1, $2, $3)",
+        &user.email,
+        &user.password,
+        &user.role as &Role
+    )
+    .execute(pool)
+    .await;
 
     match result {
         Ok(res) => {

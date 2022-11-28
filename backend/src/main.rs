@@ -36,7 +36,11 @@ async fn main() {
         .route("/", get(|| async { "hello world" }))
         .route("/register", post(modules::auth::controller::register))
         .route("/login", post(modules::auth::controller::login))
-        .route("/uni", post(modules::university::controller::create_university))
+        .route("/profile", get(modules::user::controller::user_profile))
+        .route(
+            "/uni",
+            post(modules::university::controller::create_university),
+        )
         //.route("/user_profile", get(controllers::users::user_profile))
         .layer(cors)
         .layer(Extension(pool));

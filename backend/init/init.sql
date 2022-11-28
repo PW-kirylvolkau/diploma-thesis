@@ -1,7 +1,16 @@
+# drop database test_db with (force);
+# create database test_db;
+# \c test_db;
+
+create type role as enum (
+    'ADMIN', 'TEACHER', 'STUDENT'
+);
+
 create table users (
     id integer primary key generated always as identity,
     email VARCHAR(50) not null,
-    password VARCHAR(50) not null
+    password VARCHAR(50) not null,
+    role role not null
 );
 
 create table universities (
