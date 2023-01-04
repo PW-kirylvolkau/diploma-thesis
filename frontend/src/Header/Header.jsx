@@ -4,8 +4,11 @@ import LoginIcon from '@mui/icons-material/Login';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Avatar, ButtonGroup } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { changePage, pagesEnums } from "../NavigationSlice";
 
 export default function Header() {
+    const dispatch = useDispatch();
 
     return (
         <nav>
@@ -13,6 +16,7 @@ export default function Header() {
                 <Button 
                     className="button" 
                     sx={{ width: '150px' }}
+                    onClick={() => {dispatch(changePage(pagesEnums.calendar));}}
                 >
                     <CalendarMonthIcon fontSize="medium" sx={{paddingRight: 1}} />
                     <div className="label">Calendar</div>
@@ -20,6 +24,7 @@ export default function Header() {
                 <Button 
                     className="button" 
                     sx={{ width: '150px' }}
+                    onClick={() => {dispatch(changePage(pagesEnums.settings));}}
                 >
                     <SettingsIcon fontSize="medium" sx={{paddingRight: 1}} />
                     <div className="label">Settings</div>
@@ -27,6 +32,7 @@ export default function Header() {
                 <Button 
                     className="button" 
                     sx={{ width: '150px' }}
+                    onClick={() => {dispatch(changePage(pagesEnums.login));}}
                 >
                     <LoginIcon fontSize="medium" sx={{paddingRight: 1}}/>
                     <div className="label">LOGIN</div>
