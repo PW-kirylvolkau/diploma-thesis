@@ -4,12 +4,15 @@ import "./MainSection.css";
 import Calendar from "./Pages/Calendar/Calendar";
 import Login from "./Pages/Login/Login";
 import Settings from "./Pages/Settings/Settings";
+import Main from "./Pages/Main/Main";
 
 function getPage() {
     const page = useSelector(state => state.pages.value);
 
 
     switch(page) {
+        case pagesEnums.main: 
+            return <Main />
         case pagesEnums.calendar:
             return <Calendar />;
         case pagesEnums.login:

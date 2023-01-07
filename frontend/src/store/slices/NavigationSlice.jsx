@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const pagesEnums = {
+    main: "main",
     calendar: "calendar",
     settings: "settings",
     login: "login"
 }
 
 const initialState =  {
-    value: pagesEnums.calendar
+    value: pagesEnums.main
 };
 
 const pagesSlice = createSlice({
