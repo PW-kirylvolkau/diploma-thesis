@@ -1,4 +1,3 @@
-import { useDispatch, useSelector } from 'react-redux';
 import Header from "./Header/Header"
 import MainSection from './MainSection/MainSection';
 
