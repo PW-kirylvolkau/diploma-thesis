@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { pagesEnums } from "../NavigationSlice";
+import { pagesEnums } from "../store/slices/NavigationSlice";
 import "./MainSection.css";
 import Calendar from "./Pages/Calendar/Calendar";
 import Login from "./Pages/Login/Login";

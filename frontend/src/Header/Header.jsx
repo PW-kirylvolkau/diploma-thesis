@@ -5,7 +5,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Avatar, ButtonGroup } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { changePage, pagesEnums } from "../NavigationSlice";
+import { changePage, pagesEnums } from "../store/slices/NavigationSlice";
 
 export default function Header() {
     const dispatch = useDispatch();

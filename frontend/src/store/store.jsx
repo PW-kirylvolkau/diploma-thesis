@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import defaultReducer from './slice';
-import pagesReducer from './NavigationSlice';
+import defaultReducer from './slices/DefaultSlice';
+import pagesReducer from './slices/NavigationSlice';
 
 export default configureStore({
     reducer: {
