@@ -1,6 +1,5 @@
 .main-section {
-    background-color: rgb(0, 166, 255);
     min-width: 100%;
-    min-height: 100%;
-    margin-top: 65px;
+    min-height: 90vh;
+    margin-top: 10vh;
 }
