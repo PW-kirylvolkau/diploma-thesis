@@ -4,7 +4,7 @@ use super::models::{User, UserError};
 
 pub struct UserDbData {
     pub email: String,
-    pub role: Option<String>
+    pub role: Option<String>,
 }
 
 pub async fn get_user_by_email(email: &str, pool: &PgPool) -> Result<Option<User>, UserError> {
@@ -20,9 +20,9 @@ pub async fn get_user_by_email(email: &str, pool: &PgPool) -> Result<Option<User
         option.map(|user| match user.role {
             Some(role) => User {
                 email: user.email,
-                role
+                role,
             },
-            None => unreachable!()
+            None => unreachable!(),
         })
     })
     .map_err(|err| {

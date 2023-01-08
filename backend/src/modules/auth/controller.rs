@@ -3,7 +3,7 @@ use jsonwebtoken::{encode, Header};
 use serde_json::{json, Value};
 use sqlx::PgPool;
 
-use crate::{utils::get_timestamp_8_hours_from_now, modules::auth::models::Role};
+use crate::{modules::auth::models::Role, utils::get_timestamp_8_hours_from_now};
 
 use super::{
     models::AuthError,

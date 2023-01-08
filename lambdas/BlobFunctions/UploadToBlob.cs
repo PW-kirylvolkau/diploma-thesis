@@ -17,25 +17,45 @@ namespace BlobFunctions
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
+            // var connectionString = Environment.GetEnvironmentVariable("BlobConnectionString");
             var connectionString = "DefaultEndpointsProtocol=https;AccountName=diplomablob;AccountKey=VsdWZBUdqPsS2Lf1PBVheLA3JWOWdrD4iDLA4Hh2uyUzNtuejSOKlAsG5hIzWxh8bZ8zeA49YTQa+ASt1/q4yw==;EndpointSuffix=core.windows.net";
             var file = req.Form.Files["File"];
-            var containerName = file.ContentType.Replace("/", "-");
-            log.LogInformation(file.Name);
-            var fileBlob = file.OpenReadStream();
-            log.LogInformation($"{fileBlob.Length}");
-            var blobClient = new BlobContainerClient(connectionString, containerName);
-            // set access level to public (or understand how does the security key authentication works)
-            var blobCreation = await blobClient.CreateIfNotExistsAsync();
-            if (blobCreation?.GetRawResponse() is not null && blobCreation.GetRawResponse().IsError)
+
+            if (file is null)
             {
-                return new StatusCodeResult(500);
+                return new BadRequestObjectResult(new { msg = $"No file attached." });
             }
-            log.LogInformation("lol1");
-            var blob = blobClient.GetBlobClient($"{Guid.NewGuid().ToString()}.mp4");
-            log.LogInformation("lol2");
-            await blob.UploadAsync(fileBlob, new BlobUploadOptions {HttpHeaders = new BlobHttpHeaders {ContentType = file.ContentType}});
-            log.LogInformation("lol3");
-            return new OkObjectResult("file uploaded successfully");
+
+            var containerName = file.ContentType switch
+            {
+                "video/mp4" => "lesson-videos",
+                "application/pdf" => "lesson-attachments",
+                _ => null
+            };
+
+            if (containerName is null)
+            {
+                return new BadRequestObjectResult(new { msg = $"{file.ContentType} is not recognised type." });
+            }
+
+            var fileBlob = file.OpenReadStream();
+
+            var blobClient = new BlobContainerClient(connectionString, containerName);
+
+            var blobName = $"{Guid.NewGuid()}.{file.FileName.Substring(file.FileName.LastIndexOf(".") + 1)}";
+            var blob = blobClient.GetBlobClient(blobName);
+
+            var uploadResult = await blob.UploadAsync(
+                fileBlob,
+                new BlobUploadOptions
+                {
+                    HttpHeaders = new BlobHttpHeaders
+                    {
+                        ContentType = file.ContentType
+                    }
+                });
+
+            return new OkObjectResult(blobName);
         }
     }
 }
