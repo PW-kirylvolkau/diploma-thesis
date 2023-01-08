@@ -47,6 +47,7 @@ async fn main() {
             get(modules::lesson::controller::get_lesson_by_id),
         )
         .route("/lesson", post(modules::lesson::controller::create_lesson))
+        .route("/course", post(modules::course::controller::create_course))
         .layer(cors)
         .layer(Extension(pool));
     let address = std::net::SocketAddr::from(([127, 0, 0, 1], 3000));

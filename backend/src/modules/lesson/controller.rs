@@ -7,10 +7,9 @@ use axum::{
 use serde_json::{json, Value};
 use sqlx::PgPool;
 
-use crate::modules::lesson::storage;
+use crate::modules::{lesson::storage, blob};
 
 use super::{
-    blob,
     models::{Errors, Lesson, LessonType},
 };
 

@@ -1,0 +1,11 @@
+nav {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: #FFC93C;
+    min-width: 100%;
+}
+
+.label {
+    font-size: small;
+}

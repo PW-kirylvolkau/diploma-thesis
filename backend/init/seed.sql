@@ -1,9 +1,9 @@
 insert into universities (name) values
 ('university 1');
 
-insert into courses (name, is_public) values
-('math', TRUE),
-('language', TRUE);
+insert into courses (name, tile_url, is_public) values
+('math', 'invalid_url', TRUE),
+('language', 'invalid_url', TRUE);
 
 insert into lessons (name, text, type, resource_url) values
 ('math 1', 'this is a lesson 1 from math', 'ATTACHMENT', 'https://diplomablob.blob.core.windows.net/lesson-attachments/KirylVolkau_CV.pdf'),
