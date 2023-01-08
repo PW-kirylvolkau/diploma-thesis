@@ -2,7 +2,10 @@ use sqlx::PgPool;
 
 use super::models::{AuthError, Role, UserCreateDto};
 
-pub async fn get_user_by_email(email: &str, pool: &PgPool) -> Result<Option<UserCreateDto>, AuthError> {
+pub async fn get_user_by_email(
+    email: &str,
+    pool: &PgPool,
+) -> Result<Option<UserCreateDto>, AuthError> {
     sqlx::query_as!(
         UserCreateDto,
         r#"select email, password, role as "role: _" from users where email = $1"#,

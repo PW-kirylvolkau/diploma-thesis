@@ -15,6 +15,7 @@ async fn main() {
     // ceremony
     dotenv().ok();
     let database_url = std::env::var("DATABASE_URL").expect("set DATABASE_URL env variable.");
+
     let pool = PgPoolOptions::new()
         .max_connections(5)
         .connect(&database_url)
@@ -41,7 +42,11 @@ async fn main() {
             "/uni",
             post(modules::university::controller::create_university),
         )
-        //.route("/user_profile", get(controllers::users::user_profile))
+        .route(
+            "/lesson/:id",
+            get(modules::lesson::controller::get_lesson_by_id),
+        )
+        .route("/lesson", post(modules::lesson::controller::create_lesson))
         .layer(cors)
         .layer(Extension(pool));
     let address = std::net::SocketAddr::from(([127, 0, 0, 1], 3000));
