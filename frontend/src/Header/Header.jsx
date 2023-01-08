@@ -15,7 +15,7 @@ export default function Header() {
             <ButtonGroup size="small" sx={{ float: "left" }}>
                 <Button 
                     className="button" 
-                    sx={{ width: '150px', height: '8vh' }}
+                    sx={{ width: '300px', height: '8vh' }}
                     onClick={() => {dispatch(changePage(pagesEnums.main));}}
                 >
                     <div className="label">LOGO</div>
