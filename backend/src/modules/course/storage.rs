@@ -1,6 +1,8 @@
 use sqlx::PgPool;
 
 use super::models::Course;
+use super::models::CourseDto;
+use super::models::LessonDto;
 
 pub struct InsertId {
     id: i32
@@ -22,6 +24,30 @@ pub async fn create_course(course: Course, pool: &PgPool) -> Result<i32, &str> {
             Ok(res.id)
         }
         Err(_err) => Err("error when creating course"),
+    }
+}
+
+pub async fn get_course_with_lessons_by_id(id: i32, pool: &PgPool) -> CourseDto {
+    let lessons = sqlx::query_as!(
+        LessonDto,
+        r#"select distinct l.id, l.name, l.text, l.resource_url, l.type as "lesson_type: _" from lessons l
+           join course_lessons cl on cl.lesson_id = l.id
+           where cl.course_id = $1"#,
+        id)
+        .fetch_all(pool)
+        .await
+        .unwrap();
+    let course = sqlx::query_as!(Course, "select * from courses where id = $1", id)
+        .fetch_one(pool)
+        .await
+        .unwrap();
+    
+    CourseDto {
+        id: course.id,
+        name: course.name,
+        tile_url: course.tile_url,
+        is_public: course.is_public,
+        lessons
     }
 }
 

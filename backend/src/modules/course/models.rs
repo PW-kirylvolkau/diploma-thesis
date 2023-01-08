@@ -25,10 +25,11 @@ pub struct LessonDto {
     pub lesson_type: LessonType,
 }
 
+#[derive(Serialize, Deserialize)]
 pub struct CourseDto {
-    id: i32,
-    name: String,
-    tile_url: String,
-    is_public: bool,
-    lessons: Vec<LessonDto>
+    pub id: i32,
+    pub name: String,
+    pub tile_url: String,
+    pub is_public: bool,
+    pub lessons: Vec<LessonDto>
 }

@@ -1,9 +1,10 @@
-use axum::{Extension, Json, extract::Multipart};
+use axum::{Extension, Json, extract::{Multipart, Path}};
 use serde_json::{Value, json};
 use sqlx::PgPool;
 
 use crate::modules::{course::{models::Course, storage}, blob::upload_file_to_blob};
 
+use super::models::CourseDto;
 
 #[axum_macros::debug_handler]
 pub async fn create_course(
@@ -41,4 +42,13 @@ pub async fn create_course(
     let course_id = storage::create_course(course, &pool).await?;
     storage::assign_course_to_university(course_id, uni_id.unwrap(), &pool).await;
     Ok(Json(json!({ "msg" : "lesson created successfully" })))
+}
+
+#[axum_macros::debug_handler]
+pub async fn get_course_with_lessons_by_id(
+    Extension(pool): Extension<PgPool>,
+    Path(id): Path<i32>,
+) -> Result<Json<CourseDto>, String> {
+    let course = storage::get_course_with_lessons_by_id(id, &pool).await;
+    Ok(axum::extract::Json(course))
 }

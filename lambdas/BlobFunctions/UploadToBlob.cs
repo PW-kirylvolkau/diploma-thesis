@@ -30,6 +30,7 @@ namespace BlobFunctions
             {
                 "video/mp4" => "lesson-videos",
                 "application/pdf" => "lesson-attachments",
+                var str when str.Contains("image") => "pictures",
                 _ => null
             };
 
