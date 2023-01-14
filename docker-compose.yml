@@ -13,7 +13,6 @@ services:
       # copy the sql script to fill tables
       - ./init/seed.sql:/docker-entrypoint-initdb.d/seed.sql
   web:
-    restart: on-failure
     depends_on:
       - db
     build: ./backend
