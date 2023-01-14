@@ -1,6 +1,5 @@
-# drop database test_db with (force);
-# create database test_db;
-# \c test_db;
+create database test_db;
+\c test_db;
 
 create type role as enum (
     'ADMIN', 'TEACHER', 'STUDENT'

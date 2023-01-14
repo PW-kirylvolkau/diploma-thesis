@@ -1,3 +1,361 @@
 {
-  "db": "PostgreSQL"
+  "db": "PostgreSQL",
+  "05e0a36fd3870a8cc9d5d30ffb74eeb21b5f108a8850ae8997627424a3459cae": {
+    "describe": {
+      "columns": [
+        {
+          "name": "course_id",
+          "ordinal": 0,
+          "type_info": "Int4"
+        },
+        {
+          "name": "lesson_id",
+          "ordinal": 1,
+          "type_info": "Int4"
+        },
+        {
+          "name": "seq",
+          "ordinal": 2,
+          "type_info": "Int4"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "Int4",
+          "Int4"
+        ]
+      }
+    },
+    "query": "select * from course_lessons where course_id = $1 and lesson_id = $2 order by seq desc limit 1"
+  },
+  "1d51edee2b51ab7ec01b49cba92b2734b38b1eb3afb3d47857fc27ed953f8e71": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int4",
+          "Int4"
+        ]
+      }
+    },
+    "query": "insert into university_courses (uni_id, course_id) values ($1, $2)"
+  },
+  "85fe71283d5e5e6b209e885f27cabdea8532441e298cc2c300de7e17c0b799fb": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Text",
+          "Varchar",
+          {
+            "Custom": {
+              "kind": {
+                "Enum": [
+                  "ADMIN",
+                  "TEACHER",
+                  "STUDENT"
+                ]
+              },
+              "name": "role"
+            }
+          }
+        ]
+      }
+    },
+    "query": "insert into users (email, password, role) values ($1, $2, $3)"
+  },
+  "97d14716b90e89ceed58baba4e31666b014a1522183fab3fb2a50b689ad7811e": {
+    "describe": {
+      "columns": [],
+      "nullable": [],
+      "parameters": {
+        "Left": [
+          "Int4",
+          "Int4",
+          "Int4"
+        ]
+      }
+    },
+    "query": "insert into course_lessons (course_id, lesson_id, seq) values ($1, $2, $3)"
+  },
+  "a2d351635d366c0771c68d9ee420e7cd46cc9a8c8bbee660045c68d6a16fe15c": {
+    "describe": {
+      "columns": [
+        {
+          "name": "email",
+          "ordinal": 0,
+          "type_info": "Text"
+        },
+        {
+          "name": "password",
+          "ordinal": 1,
+          "type_info": "Varchar"
+        },
+        {
+          "name": "role: _",
+          "ordinal": 2,
+          "type_info": {
+            "Custom": {
+              "kind": {
+                "Enum": [
+                  "ADMIN",
+                  "TEACHER",
+                  "STUDENT"
+                ]
+              },
+              "name": "role"
+            }
+          }
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "Text"
+        ]
+      }
+    },
+    "query": "select email, password, role as \"role: _\" from users where email = $1"
+  },
+  "a2dc42b49548680d0f8e09509416654f2260d6a94231e2308c1d923e3ec8262a": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Int4"
+        }
+      ],
+      "nullable": [
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "Text",
+          "Text",
+          {
+            "Custom": {
+              "kind": {
+                "Enum": [
+                  "VIDEO",
+                  "ATTACHMENT",
+                  "TEXT"
+                ]
+              },
+              "name": "lesson_type"
+            }
+          },
+          "Text"
+        ]
+      }
+    },
+    "query": "insert into lessons (name, text, type, resource_url) values ($1, $2, $3, $4) RETURNING id"
+  },
+  "ae27240f10c7c0659f2429bb4674d4cba4c077482c53188e16401a158cb3d4f1": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Int4"
+        },
+        {
+          "name": "name",
+          "ordinal": 1,
+          "type_info": "Text"
+        },
+        {
+          "name": "text",
+          "ordinal": 2,
+          "type_info": "Text"
+        },
+        {
+          "name": "resource_url",
+          "ordinal": 3,
+          "type_info": "Text"
+        },
+        {
+          "name": "lesson_type: _",
+          "ordinal": 4,
+          "type_info": {
+            "Custom": {
+              "kind": {
+                "Enum": [
+                  "VIDEO",
+                  "ATTACHMENT",
+                  "TEXT"
+                ]
+              },
+              "name": "lesson_type"
+            }
+          }
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false,
+        true,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "Int4"
+        ]
+      }
+    },
+    "query": "select distinct l.id, l.name, l.text, l.resource_url, l.type as \"lesson_type: _\" from lessons l\n           join course_lessons cl on cl.lesson_id = l.id\n           where cl.course_id = $1"
+  },
+  "b4a5283e5979cc4534f7fd6e29a6cec72e72bb3264278a138a3fd3071c948b79": {
+    "describe": {
+      "columns": [
+        {
+          "name": "email",
+          "ordinal": 0,
+          "type_info": "Text"
+        },
+        {
+          "name": "role",
+          "ordinal": 1,
+          "type_info": "Text"
+        }
+      ],
+      "nullable": [
+        false,
+        null
+      ],
+      "parameters": {
+        "Left": [
+          "Text"
+        ]
+      }
+    },
+    "query": "select email, role::text from users where email = $1"
+  },
+  "c52421b9f56faa3d54b878b5b517eaca2a95f6594f0edf4931c001a3af654d04": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Int4"
+        },
+        {
+          "name": "name",
+          "ordinal": 1,
+          "type_info": "Text"
+        },
+        {
+          "name": "tile_url",
+          "ordinal": 2,
+          "type_info": "Text"
+        },
+        {
+          "name": "is_public",
+          "ordinal": 3,
+          "type_info": "Bool"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "Int4"
+        ]
+      }
+    },
+    "query": "select * from courses where id = $1"
+  },
+  "e8bbb17b0110a7b967e2f0dbc0c3374847b2e90c2fa0fac4db5aa5f02a83b0d4": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Int4"
+        },
+        {
+          "name": "name",
+          "ordinal": 1,
+          "type_info": "Text"
+        },
+        {
+          "name": "text",
+          "ordinal": 2,
+          "type_info": "Text"
+        },
+        {
+          "name": "resource_url",
+          "ordinal": 3,
+          "type_info": "Text"
+        },
+        {
+          "name": "lesson_type: _",
+          "ordinal": 4,
+          "type_info": {
+            "Custom": {
+              "kind": {
+                "Enum": [
+                  "VIDEO",
+                  "ATTACHMENT",
+                  "TEXT"
+                ]
+              },
+              "name": "lesson_type"
+            }
+          }
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false,
+        true,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "Int4"
+        ]
+      }
+    },
+    "query": "select id, name, text, resource_url, type as \"lesson_type: _\" from lessons where id = $1"
+  },
+  "f165d6528392fcfbbb84042b1af2f8869d4f593b0125bc8ce1eb41989a570f17": {
+    "describe": {
+      "columns": [
+        {
+          "name": "id",
+          "ordinal": 0,
+          "type_info": "Int4"
+        }
+      ],
+      "nullable": [
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "Text",
+          "Text",
+          "Bool"
+        ]
+      }
+    },
+    "query": "insert into courses (name, tile_url, is_public) values ($1, $2, $3) RETURNING id"
+  }
 }

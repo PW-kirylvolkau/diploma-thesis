@@ -1,3 +1,5 @@
+\c test_db;
+
 insert into universities (name) values
 ('university 1');
 
