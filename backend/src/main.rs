@@ -51,7 +51,7 @@ async fn main() {
         .route("/course/:id", get(modules::course::controller::get_course_with_lessons_by_id))
         .layer(cors)
         .layer(Extension(pool));
-    let address = std::net::SocketAddr::from(([127, 0, 0, 1], 3000));
+    let address = std::net::SocketAddr::from(([0, 0, 0, 0], 3000));
     tracing::debug!("listening on {}", address);
     axum::Server::bind(&address)
         .serve(app.into_make_service())
