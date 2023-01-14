@@ -1,4 +1,6 @@
+import { Scheduler } from "@aldabil/react-scheduler";
+import { EVENTS } from "./events";
 
-export default function Calendar() {
-    return <h1>Calendar</h1>
+export default function App() {
+  return <Scheduler events={EVENTS} />;
 }
