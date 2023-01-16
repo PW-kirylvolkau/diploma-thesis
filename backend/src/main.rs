@@ -31,7 +31,7 @@ async fn main() {
         .init();
 
     // initialize app
-    let cors = CorsLayer::new().allow_origin(Any);
+    let cors = CorsLayer::permissive();
 
     let app = Router::new()
         .route("/", get(|| async { "hello world" }))
